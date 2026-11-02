@@ -5,9 +5,9 @@ This is a small Java script project about games you want to keep track of "playi
 https://jacoba-cyber.github.io/GameShelf/
 
 # Built with
-Css
-Html
-Javascript
+* Css
+* Html
+* Javascript
 
 # Features
 Local Profile
