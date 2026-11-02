@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10111a">
+  <meta name="description" content="A personal video game backlog tracker built with HTML, CSS, and JavaScript.">
+  <title>GameShelf — Video Game Backlog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="GameShelf home">
+        <span class="brand-mark" aria-hidden="true">G</span>
+        <span>Game<span class="brand-accent">Shelf</span></span>
+      </a>
+      <span class="topbar-note"><span class="status-dot"></span> Your personal game library</span>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">YOUR NEXT ADVENTURE STARTS HERE</p>
+          <h1 id="page-title">Keep your <span>backlog</span><br>under control.</h1>
+          <p class="hero-description">Track what you want to play, what you’re playing now, and the games you’ve finished.</p>
+        </div>
+        <div class="hero-art" aria-label="Player profile">
+          <div class="orb orb-one" aria-hidden="true"></div>
+          <div class="orb orb-two" aria-hidden="true"></div>
+          <button class="profile-avatar-button" id="open-profile" type="button" aria-label="Edit your profile picture">
+            <span class="profile-avatar-placeholder" id="profile-avatar-placeholder">P1</span>
+            <img class="profile-avatar-image hidden" id="profile-avatar-image" alt="">
+            <span class="avatar-edit-indicator" aria-hidden="true">✎</span>
+          </button>
+          <div class="profile-caption">
+            <p class="profile-label">PLAYER PROFILE</p>
+            <p class="profile-username" id="profile-username">Player 1</p>
+            <button class="edit-profile-button" id="edit-profile" type="button">Edit profile</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Library summary">
+        <article class="stat-card"><span class="stat-icon violet">▤</span><div><p class="stat-label">IN YOUR LIBRARY</p><p class="stat-value" id="total-count">0</p></div></article>
+        <article class="stat-card"><span class="stat-icon blue">▶</span><div><p class="stat-label">PLAYING NOW</p><p class="stat-value" id="playing-count">0</p></div></article>
+        <article class="stat-card"><span class="stat-icon green">✓</span><div><p class="stat-label">COMPLETED</p><p class="stat-value" id="completed-count">0</p></div></article>
+      </section>
+
+      <section class="content-grid" aria-label="Manage your games">
+        <aside class="panel add-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">BUILD YOUR COLLECTION</p><h2 id="form-heading">Add a game</h2></div>
+            <span class="heading-icon" aria-hidden="true">＋</span>
+          </div>
+          <form id="game-form">
+            <label for="game-title">Game title</label>
+            <input id="game-title" name="title" type="text" maxlength="70" placeholder="e.g. Hollow Knight" required>
+
+            <div class="form-row">
+              <div><label for="game-platform">Platform</label>
+                <select id="game-platform" name="platform" required>
+                  <option value="">Choose one</option><option>PC</option><option>PlayStation</option><option>Xbox</option><option>Nintendo Switch</option><option>Other</option>
+                </select>
+              </div>
+              <div><label for="game-genre">Genre</label>
+                <select id="game-genre" name="genre" required>
+                  <option value="">Choose one</option><option>Action</option><option>Adventure</option><option>Fighting</option><option>Platformer</option><option>Puzzle</option><option>RPG</option><option>Shooter</option><option>Simulation</option><option>Sports</option><option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <label for="game-status">Status</label>
+            <select id="game-status" name="status" required>
+              <option>Want to Play</option><option>Playing</option><option>Completed</option>
+            </select>
+            <div class="form-actions">
+              <button class="button button-primary" id="submit-button" type="submit"><span aria-hidden="true">＋</span> Add to library</button>
+              <button class="button button-quiet hidden" id="cancel-edit" type="button">Cancel</button>
+            </div>
+            <p class="form-hint">Your list is saved in this browser automatically.</p>
+          </form>
+        </aside>
+
+        <section class="panel library-panel" aria-labelledby="library-heading">
+          <div class="library-heading-row">
+            <div class="panel-heading library-title">
+              <div><p class="eyebrow">THE COLLECTION</p><h2 id="library-heading">My games <span class="count-pill" id="shown-count">0</span></h2></div>
+            </div>
+          </div>
+          <div class="toolbar">
+            <label class="search-box" for="search-games"><span aria-hidden="true">⌕</span><input id="search-games" type="search" placeholder="Search your games…" autocomplete="off"><span class="sr-only">Search by title, genre, or platform</span></label>
+            <label class="filter-wrap" for="status-filter"><span class="sr-only">Filter by status</span>
+              <select id="status-filter"><option value="All">All statuses</option><option>Want to Play</option><option>Playing</option><option>Completed</option></select>
+            </label>
+          </div>
+          <div class="game-list" id="game-list" aria-live="polite"></div>
+          <p class="empty-state hidden" id="empty-state">No games match that search. Try another title or filter.</p>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer"><span>Made for the games you love.</span><span>GameShelf <span class="footer-dot">•</span> A JavaScript project</span></footer>
+  </div>
+
+  <dialog class="profile-dialog" id="profile-dialog" aria-labelledby="profile-dialog-title">
+    <form class="profile-form" id="profile-form">
+      <div class="profile-dialog-heading">
+        <div><p class="eyebrow">MAKE IT YOURS</p><h2 id="profile-dialog-title">Edit your profile</h2></div>
+        <button class="dialog-close" id="close-profile" type="button" aria-label="Close profile editor">×</button>
+      </div>
+      <div class="avatar-preview" aria-hidden="true">
+        <span class="profile-avatar-placeholder" id="preview-avatar-placeholder">P1</span>
+        <img class="profile-avatar-image hidden" id="preview-avatar-image" alt="">
+      </div>
+      <label for="profile-name">Username</label>
+      <input id="profile-name" name="username" type="text" maxlength="24" placeholder="Choose a username" required>
+      <label for="profile-picture">Profile picture</label>
+      <input id="profile-picture" name="avatar" type="file" accept="image/png,image/jpeg,image/webp">
+      <p class="profile-help">Choose a JPG, PNG, or WebP image up to 1 MB. This profile is saved only in this browser.</p>
+      <div class="profile-dialog-actions">
+        <button class="button button-quiet" id="remove-avatar" type="button">Use initials</button>
+        <button class="button button-primary" type="submit">Save profile</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
