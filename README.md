@@ -1,15 +1,15 @@
-Jacob Alvarez - GameShelf
+# Jacob Alvarez - GameShelf
 This is a small Java script project about games you want to keep track of "playing", "Completed" And "Want to play" With many games it can get hard to keep track of them! 
 
-#Live Website
+# Live Website
 
 
-#Built with
+# Built with
 Css
 Html
 Javascript
 
-#Features
+# Features
 Local Profile
 organizing games
 Search bar
